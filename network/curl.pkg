@@ -1,0 +1,29 @@
+[Package]
+name = "curl"
+version = "8.5.0"
+description = "Command-line tool for transferring data with URLs"
+url = "https://curl.se/download/curl-8.5.0.tar.gz"
+category = "network"
+
+[Dependencies]
+depends = "openssl zlib"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+# Custom build script (optional)
+# If not provided, uses standard: ./configure && make && make install
+#
+# Available variables:
+#   $SRC_DIR  - Source directory
+#   $PREFIX   - Installation prefix (/usr)
+#   $DESTDIR  - Staging directory
+#
+# Example:
+# cd $SRC_DIR
+# ./configure --prefix=$PREFIX
+# make -j$(nproc)
+# make install DESTDIR=$DESTDIR

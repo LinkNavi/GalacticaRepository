@@ -1,0 +1,10 @@
+development/python.pkg
+
+editors/vim.pkg
+
+libraries/ncurses.pkg
+libraries/openssl.pkg
+
+network/curl.pkg
+
+shells/bash.pkg

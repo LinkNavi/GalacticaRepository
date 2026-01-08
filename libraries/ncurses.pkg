@@ -1,0 +1,29 @@
+[Package]
+name = "ncurses"
+version = "6.4"
+description = "Terminal handling library"
+url = "https://ftp.gnu.org/gnu/ncurses/ncurses-6.4.tar.gz"
+category = "libraries"
+
+[Dependencies]
+depends = ""
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+# Custom build script (optional)
+# If not provided, uses standard: ./configure && make && make install
+#
+# Available variables:
+#   $SRC_DIR  - Source directory
+#   $PREFIX   - Installation prefix (/usr)
+#   $DESTDIR  - Staging directory
+#
+# Example:
+# cd $SRC_DIR
+# ./configure --prefix=$PREFIX
+# make -j$(nproc)
+# make install DESTDIR=$DESTDIR
