@@ -1,0 +1,18 @@
+[Package]
+name = "bat"
+version = "0.24.0"
+description = "Cat clone with syntax highlighting"
+url = "https://github.com/sharkdp/bat/archive/v0.24.0.tar.gz"
+category = "system"
+
+[Dependencies]
+depends = "rust"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+cargo build --release
+install -Dm755 target/release/bat /usr/bin/bat

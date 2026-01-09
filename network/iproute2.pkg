@@ -1,0 +1,19 @@
+[Package]
+name = "iproute2"
+version = "6.7.0"
+description = "IP routing utilities (ip, ss, tc)"
+url = "https://mirrors.edge.kernel.org/pub/linux/utils/net/iproute2/iproute2-6.7.0.tar.xz"
+category = "network"
+
+[Dependencies]
+depends = ""
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+./configure --prefix=/usr
+make -j$(nproc)
+make install DESTDIR="" SBINDIR=/usr/sbin

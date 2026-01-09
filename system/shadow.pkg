@@ -1,0 +1,19 @@
+[Package]
+name = "shadow"
+version = "4.14.3"
+description = "Password and user account administration tools"
+url = "https://github.com/shadow-maint/shadow/releases/download/4.14.3/shadow-4.14.3.tar.xz"
+category = "system"
+
+[Dependencies]
+depends = ""
+
+[Build]
+configure_flags = "--prefix=/usr --sysconfdir=/etc"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --sysconfdir=/etc --with-group-name-max-length=32
+make -j$(nproc)
+make install

@@ -1,0 +1,19 @@
+[Package]
+name = "pcre2"
+version = "10.42"
+description = "Perl Compatible Regular Expressions"
+url = "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.42/pcre2-10.42.tar.bz2"
+category = "libraries"
+
+[Dependencies]
+depends = "zlib bzip2"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --enable-unicode --enable-pcre2-16 --enable-pcre2-32 --enable-jit
+make -j$(nproc)
+make install

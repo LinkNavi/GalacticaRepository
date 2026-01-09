@@ -1,0 +1,19 @@
+[Package]
+name = "netcat"
+version = "1.226"
+description = "OpenBSD netcat - networking Swiss army knife"
+url = "https://salsa.debian.org/debian/netcat-openbsd/-/archive/debian/1.226-1/netcat-openbsd-debian-1.226-1.tar.gz"
+category = "network"
+
+[Dependencies]
+depends = ""
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+make -j$(nproc)
+install -Dm755 nc /usr/bin/nc
+ln -sf nc /usr/bin/netcat

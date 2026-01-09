@@ -1,0 +1,19 @@
+[Package]
+name = "libtasn1"
+version = "4.19.0"
+description = "ASN.1 library"
+url = "https://ftp.gnu.org/gnu/libtasn1/libtasn1-4.19.0.tar.gz"
+category = "libraries"
+
+[Dependencies]
+depends = ""
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr
+make -j$(nproc)
+make install

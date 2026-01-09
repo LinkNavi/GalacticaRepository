@@ -1,0 +1,19 @@
+[Package]
+name = "libgcrypt"
+version = "1.10.3"
+description = "GNU cryptographic library"
+url = "https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-1.10.3.tar.bz2"
+category = "libraries"
+
+[Dependencies]
+depends = "libgpg-error"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr
+make -j$(nproc)
+make install

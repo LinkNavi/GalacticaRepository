@@ -1,0 +1,19 @@
+[Package]
+name = "e2fsprogs"
+version = "1.47.0"
+description = "Ext2/3/4 filesystem utilities"
+url = "https://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.47.0.tar.gz"
+category = "system"
+
+[Dependencies]
+depends = "util-linux"
+
+[Build]
+configure_flags = "--prefix=/usr --sysconfdir=/etc"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --sysconfdir=/etc --enable-elf-shlibs --disable-libblkid --disable-libuuid
+make -j$(nproc)
+make install

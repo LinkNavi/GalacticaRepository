@@ -1,0 +1,19 @@
+[Package]
+name = "file"
+version = "5.45"
+description = "File type identification utility"
+url = "https://astron.com/pub/file/file-5.45.tar.gz"
+category = "system"
+
+[Dependencies]
+depends = "zlib"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr
+make -j$(nproc)
+make install

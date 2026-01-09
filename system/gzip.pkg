@@ -1,0 +1,19 @@
+[Package]
+name = "gzip"
+version = "1.13"
+description = "GNU compression utility"
+url = "https://ftp.gnu.org/gnu/gzip/gzip-1.13.tar.xz"
+category = "system"
+
+[Dependencies]
+depends = ""
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr
+make -j$(nproc)
+make install

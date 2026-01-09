@@ -1,0 +1,19 @@
+[Package]
+name = "ffmpeg"
+version = "6.1.1"
+description = "Complete solution to record, convert and stream audio/video"
+url = "https://ffmpeg.org/releases/ffmpeg-6.1.1.tar.xz"
+category = "multimedia"
+
+[Dependencies]
+depends = "zlib openssl"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+./configure --prefix=/usr --enable-gpl --enable-openssl --enable-shared --disable-static
+make -j$(nproc)
+make install

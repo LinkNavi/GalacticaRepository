@@ -1,0 +1,19 @@
+[Package]
+name = "rsync"
+version = "3.2.7"
+description = "Fast incremental file transfer utility"
+url = "https://download.samba.org/pub/rsync/rsync-3.2.7.tar.gz"
+category = "network"
+
+[Dependencies]
+depends = "openssl zlib"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --disable-xxhash --disable-zstd --disable-lz4
+make -j$(nproc)
+make install

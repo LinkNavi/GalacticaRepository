@@ -1,0 +1,19 @@
+[Package]
+name = "sqlite"
+version = "3.45.0"
+description = "Self-contained SQL database engine"
+url = "https://www.sqlite.org/2024/sqlite-autoconf-3450000.tar.gz"
+category = "databases"
+
+[Dependencies]
+depends = "readline"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --enable-fts5
+make -j$(nproc)
+make install

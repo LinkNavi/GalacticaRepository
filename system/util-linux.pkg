@@ -1,0 +1,19 @@
+[Package]
+name = "util-linux"
+version = "2.39.3"
+description = "Miscellaneous system utilities (mount, fdisk, etc.)"
+url = "https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/util-linux-2.39.3.tar.xz"
+category = "system"
+
+[Dependencies]
+depends = "zlib"
+
+[Build]
+configure_flags = "--prefix=/usr --disable-chfn-chsh --disable-login --disable-su --disable-runuser"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --disable-chfn-chsh --disable-login --disable-su --disable-runuser --disable-pylibmount
+make -j$(nproc)
+make install

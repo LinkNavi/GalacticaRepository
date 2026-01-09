@@ -1,0 +1,19 @@
+[Package]
+name = "nettle"
+version = "3.9.1"
+description = "Low-level cryptographic library"
+url = "https://ftp.gnu.org/gnu/nettle/nettle-3.9.1.tar.gz"
+category = "libraries"
+
+[Dependencies]
+depends = "gmp"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr
+make -j$(nproc)
+make install

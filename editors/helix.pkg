@@ -1,0 +1,20 @@
+[Package]
+name = "helix"
+version = "24.03"
+description = "Modern modal text editor with tree-sitter support"
+url = "https://github.com/helix-editor/helix/releases/download/24.03/helix-24.03-source.tar.xz"
+category = "editors"
+
+[Dependencies]
+depends = "rust"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+cargo build --release
+install -Dm755 target/release/hx /usr/bin/hx
+mkdir -p /usr/lib/helix
+cp -r runtime /usr/lib/helix/

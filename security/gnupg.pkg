@@ -1,0 +1,19 @@
+[Package]
+name = "gnupg"
+version = "2.4.4"
+description = "GNU Privacy Guard - encryption and signing tool"
+url = "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.4.4.tar.bz2"
+category = "security"
+
+[Dependencies]
+depends = "libgpg-error libgcrypt libksba libassuan npth"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr
+make -j$(nproc)
+make install

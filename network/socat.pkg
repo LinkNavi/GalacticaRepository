@@ -1,0 +1,19 @@
+[Package]
+name = "socat"
+version = "1.8.0.0"
+description = "Multipurpose relay for bidirectional data transfer"
+url = "http://www.dest-unreach.org/socat/download/socat-1.8.0.0.tar.gz"
+category = "network"
+
+[Dependencies]
+depends = "openssl readline"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr
+make -j$(nproc)
+make install

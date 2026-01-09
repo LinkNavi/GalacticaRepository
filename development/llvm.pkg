@@ -1,0 +1,26 @@
+[Package]
+name = "llvm"
+version = "17.0.6"
+description = "LLVM compiler infrastructure"
+url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/llvm-project-17.0.6.src.tar.xz"
+category = "development"
+
+[Dependencies]
+depends = "cmake ninja python zlib"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+cmake -G Ninja -B build -S llvm \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DLLVM_ENABLE_PROJECTS="clang;lld" \
+    -DLLVM_TARGETS_TO_BUILD="X86" \
+    -DLLVM_BUILD_LLVM_DYLIB=ON \
+    -DLLVM_LINK_LLVM_DYLIB=ON
+
+ninja -C build
+ninja -C build install

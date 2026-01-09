@@ -1,0 +1,20 @@
+[Package]
+name = "sudo"
+version = "1.9.15p5"
+description = "Execute commands as another user"
+url = "https://www.sudo.ws/dist/sudo-1.9.15p5.tar.gz"
+category = "security"
+
+[Dependencies]
+depends = "zlib"
+
+[Build]
+configure_flags = "--prefix=/usr --sysconfdir=/etc"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --sysconfdir=/etc --with-all-insults
+make -j$(nproc)
+make install
+chmod 4755 /usr/bin/sudo
