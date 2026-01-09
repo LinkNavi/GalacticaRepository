@@ -1,0 +1,19 @@
+[Package]
+name = "libtermkey"
+version = "0.22"
+description = "Library for processing keyboard entry from terminal"
+url = "https://www.leonerd.org.uk/code/libtermkey/libtermkey-0.22.tar.gz"
+category = "libraries"
+
+[Dependencies]
+depends = "ncurses"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+# libtermkey uses custom Makefile
+make -j$(nproc) PREFIX=/usr
+make install PREFIX=/usr

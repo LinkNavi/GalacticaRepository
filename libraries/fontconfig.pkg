@@ -1,0 +1,19 @@
+[Package]
+name = "fontconfig"
+version = "2.15.0"
+description = "Font configuration and customization library"
+url = "https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.15.0.tar.xz"
+category = "libraries"
+
+[Dependencies]
+depends = "freetype2 expat"
+
+[Build]
+configure_flags = "--prefix=/usr --disable-static"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --disable-static --sysconfdir=/etc
+make -j$(nproc)
+make install

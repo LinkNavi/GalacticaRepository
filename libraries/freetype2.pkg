@@ -1,0 +1,19 @@
+[Package]
+name = "freetype2"
+version = "2.13.2"
+description = "Font rendering library"
+url = "https://download.savannah.gnu.org/releases/freetype/freetype-2.13.2.tar.xz"
+category = "libraries"
+
+[Dependencies]
+depends = "zlib libpng bzip2"
+
+[Build]
+configure_flags = "--prefix=/usr --disable-static"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --disable-static --enable-freetype-config
+make -j$(nproc)
+make install

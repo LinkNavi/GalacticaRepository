@@ -1,0 +1,31 @@
+[Package]
+name = "mesa"
+version = "24.0.2"
+description = "Open-source OpenGL, Vulkan and other graphics API implementation"
+url = "https://archive.mesa3d.org/mesa-24.0.2.tar.xz"
+category = "libraries"
+
+[Dependencies]
+depends = "libdrm wayland wayland-protocols libxshmfence libxrandr libxdamage libxfixes expat zlib"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+# Mesa is complex - minimal build for software rendering + basic DRM
+meson setup build \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dplatforms=wayland,x11 \
+    -Dgallium-drivers=swrast,virgl \
+    -Dvulkan-drivers= \
+    -Dglx=dri \
+    -Degl=enabled \
+    -Dgbm=enabled \
+    -Dllvm=disabled \
+    -Dshared-glapi=enabled
+
+ninja -C build
+ninja -C build install

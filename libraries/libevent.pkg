@@ -1,0 +1,19 @@
+[Package]
+name = "libevent"
+version = "2.1.12"
+description = "Event notification library"
+url = "https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz"
+category = "libraries"
+
+[Dependencies]
+depends = "openssl"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --disable-static
+make -j$(nproc)
+make install

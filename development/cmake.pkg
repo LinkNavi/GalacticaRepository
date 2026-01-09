@@ -1,0 +1,24 @@
+[Package]
+name = "cmake"
+version = "3.28.1"
+description = "Cross-platform build system generator"
+url = "https://github.com/Kitware/CMake/releases/download/v3.28.1/cmake-3.28.1.tar.gz"
+category = "development"
+
+[Dependencies]
+depends = "openssl curl zlib"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+# CMake bootstraps itself
+./bootstrap --prefix=/usr \
+    --system-curl \
+    --system-zlib \
+    --parallel=$(nproc)
+
+make -j$(nproc)
+make install

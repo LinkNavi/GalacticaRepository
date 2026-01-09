@@ -1,0 +1,25 @@
+[Package]
+name = "tree-sitter"
+version = "0.22.2"
+description = "Incremental parsing system for programming tools"
+url = "https://github.com/tree-sitter/tree-sitter/archive/v0.22.2.tar.gz"
+category = "libraries"
+
+[Dependencies]
+depends = ""
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+# tree-sitter uses Makefile
+make -j$(nproc) PREFIX=/usr
+make install PREFIX=/usr
+
+# Also install as shared library
+make -j$(nproc) PREFIX=/usr libtree-sitter.so
+install -Dm755 libtree-sitter.so /usr/lib/libtree-sitter.so.0.22.2
+ln -sf libtree-sitter.so.0.22.2 /usr/lib/libtree-sitter.so.0
+ln -sf libtree-sitter.so.0 /usr/lib/libtree-sitter.so

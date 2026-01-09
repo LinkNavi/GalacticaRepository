@@ -1,0 +1,22 @@
+[Package]
+name = "libpciaccess"
+version = "0.18.1"
+description = "Generic PCI access library"
+url = "https://xorg.freedesktop.org/archive/individual/lib/libpciaccess-0.18.1.tar.xz"
+category = "libraries"
+
+[Dependencies]
+depends = ""
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+meson setup build \
+    --prefix=/usr \
+    --buildtype=release
+
+ninja -C build
+ninja -C build install

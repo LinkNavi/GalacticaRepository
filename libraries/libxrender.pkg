@@ -1,0 +1,19 @@
+[Package]
+name = "libxrender"
+version = "0.9.11"
+description = "X11 Rendering Extension library"
+url = "https://xorg.freedesktop.org/archive/individual/lib/libXrender-0.9.11.tar.xz"
+category = "libraries"
+
+[Dependencies]
+depends = "libX11 xorg-proto"
+
+[Build]
+configure_flags = "--prefix=/usr --disable-static"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --disable-static
+make -j$(nproc)
+make install

@@ -1,0 +1,18 @@
+[Package]
+name = "xcb-proto"
+version = "1.16.0"
+description = "XML-XCB protocol descriptions"
+url = "https://xorg.freedesktop.org/archive/individual/proto/xcb-proto-1.16.0.tar.xz"
+category = "libraries"
+
+[Dependencies]
+depends = "python"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = ""
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr
+make install

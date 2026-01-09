@@ -1,0 +1,19 @@
+[Package]
+name = "xz"
+version = "5.4.5"
+description = "XZ Utils - LZMA compression library and tools"
+url = "https://tukaani.org/xz/xz-5.4.5.tar.xz"
+category = "system"
+
+[Dependencies]
+depends = ""
+
+[Build]
+configure_flags = "--prefix=/usr --disable-static"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --disable-static
+make -j$(nproc)
+make install

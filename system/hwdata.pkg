@@ -1,0 +1,18 @@
+[Package]
+name = "hwdata"
+version = "0.378"
+description = "Hardware identification and configuration data"
+url = "https://github.com/vcrhonek/hwdata/archive/v0.378.tar.gz"
+category = "system"
+
+[Dependencies]
+depends = ""
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = ""
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --datarootdir=/usr/share
+make install

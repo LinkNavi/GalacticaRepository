@@ -1,0 +1,19 @@
+[Package]
+name = "libxcb"
+version = "1.16"
+description = "X protocol C-language Binding"
+url = "https://xorg.freedesktop.org/archive/individual/lib/libxcb-1.16.tar.xz"
+category = "libraries"
+
+[Dependencies]
+depends = "xcb-proto libxau libxdmcp"
+
+[Build]
+configure_flags = "--prefix=/usr --disable-static"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --disable-static --enable-xinput
+make -j$(nproc)
+make install

@@ -1,0 +1,19 @@
+[Package]
+name = "libxml2"
+version = "2.12.4"
+description = "XML parsing library"
+url = "https://download.gnome.org/sources/libxml2/2.12/libxml2-2.12.4.tar.xz"
+category = "libraries"
+
+[Dependencies]
+depends = "zlib xz"
+
+[Build]
+configure_flags = "--prefix=/usr --disable-static --with-history"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --disable-static --with-history
+make -j$(nproc)
+make install

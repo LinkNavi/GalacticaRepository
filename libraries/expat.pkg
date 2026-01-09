@@ -1,0 +1,19 @@
+[Package]
+name = "expat"
+version = "2.5.0"
+description = "XML parser library"
+url = "https://github.com/libexpat/libexpat/releases/download/R_2_5_0/expat-2.5.0.tar.xz"
+category = "libraries"
+
+[Dependencies]
+depends = ""
+
+[Build]
+configure_flags = "--prefix=/usr --disable-static"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --disable-static
+make -j$(nproc)
+make install

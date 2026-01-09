@@ -1,0 +1,24 @@
+[Package]
+name = "seatd"
+version = "0.8.0"
+description = "Seat management daemon"
+url = "https://git.sr.ht/~kennylevinsen/seatd/archive/0.8.0.tar.gz"
+category = "system"
+
+[Dependencies]
+depends = ""
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+meson setup build \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dlibseat-seatd=enabled \
+    -Dlibseat-builtin=enabled
+
+ninja -C build
+ninja -C build install

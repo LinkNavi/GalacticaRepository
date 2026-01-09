@@ -1,0 +1,19 @@
+[Package]
+name = "readline"
+version = "8.2"
+description = "Line editing library"
+url = "https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz"
+category = "libraries"
+
+[Dependencies]
+depends = "ncurses"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr
+make -j$(nproc)
+make install

@@ -1,0 +1,19 @@
+[Package]
+name = "libxfont2"
+version = "2.0.6"
+description = "X11 font rasterisation library"
+url = "https://xorg.freedesktop.org/archive/individual/lib/libXfont2-2.0.6.tar.xz"
+category = "libraries"
+
+[Dependencies]
+depends = "freetype2 fontconfig xorg-proto xtrans"
+
+[Build]
+configure_flags = "--prefix=/usr --disable-static"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --disable-static
+make -j$(nproc)
+make install

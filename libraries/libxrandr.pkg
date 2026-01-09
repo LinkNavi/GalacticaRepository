@@ -1,0 +1,19 @@
+[Package]
+name = "libxrandr"
+version = "1.5.4"
+description = "X11 RandR extension library"
+url = "https://xorg.freedesktop.org/archive/individual/lib/libXrandr-1.5.4.tar.xz"
+category = "libraries"
+
+[Dependencies]
+depends = "libX11 libxext libxrender xorg-proto"
+
+[Build]
+configure_flags = "--prefix=/usr --disable-static"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+./configure --prefix=/usr --disable-static
+make -j$(nproc)
+make install
