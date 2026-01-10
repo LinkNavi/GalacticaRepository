@@ -1,0 +1,55 @@
+
+[Package]
+name = "module-workspace"
+version = "1.0.0"
+description = "Dreamland WorkSpace Module"
+url = "https://raw.githubusercontent.com/LinkNavi/GalacticaRepository/main/modules/sources/opsec.cpp"
+category = "modules"
+
+[Dependencies]
+depends = "dreamland"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+# This is a Dreamland module package
+MODULE_NAME="workspace"
+MODULE_SRC="${MODULE_NAME}.cpp"
+MODULE_SO="${MODULE_NAME}.so"
+
+echo "Building Dreamland module: ${MODULE_NAME}"
+
+# Download module header
+curl -sL -o dreamland_module.h \
+    https://raw.githubusercontent.com/LinkNavi/Galactica/main/Dreamland/include/dreamland_module.h
+
+# Verify we have the source (should be downloaded as package)
+if [ ! -f "${MODULE_SRC}" ]; then
+    echo "Error: Module source not found!"
+    exit 1
+fi
+
+# Build the module
+g++ -std=c++17 -O2 -Wall -Wextra -fPIC -shared \
+    -I. \
+    -o "${MODULE_SO}" \
+    "${MODULE_SRC}"
+
+if [ $? -ne 0 ]; then
+    echo "Error: Module compilation failed!"
+    exit 1
+fi
+
+# Install to Dreamland modules directory
+MODULE_DIR="/usr/local/share/dreamland/modules"
+mkdir -p "${MODULE_DIR}"
+install -m755 "${MODULE_SO}" "${MODULE_DIR}/${MODULE_SO}"
+
+echo ""
+echo "✓ Module installed: ${MODULE_NAME}"
+echo ""
+echo "The module will be available on next Dreamland run."
+echo "View available commands: dreamland modules"

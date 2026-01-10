@@ -1,0 +1,37 @@
+[Package]
+name = "zora"
+version = "0.1.0"
+description = "Modern build system and package manager for C/C++ projects"
+url = "https://github.com/LinkNavi/Zora/archive/refs/heads/main.tar.gz"
+category = "development"
+
+[Dependencies]
+depends = "rust cargo"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+# Zora is written in Rust, so we use cargo
+cargo build --release
+
+# Install binary
+install -Dm755 target/release/zora /usr/bin/zora
+
+# Install shell completions if available
+if [ -d completions ]; then
+    install -Dm644 completions/zora.bash /usr/share/bash-completion/completions/zora
+    install -Dm644 completions/zora.zsh /usr/share/zsh/site-functions/_zora
+    install -Dm644 completions/zora.fish /usr/share/fish/vendor_completions.d/zora.fish
+fi
+
+# Install man page if available
+if [ -f docs/zora.1 ]; then
+    install -Dm644 docs/zora.1 /usr/share/man/man1/zora.1
+    gzip -f /usr/share/man/man1/zora.1
+fi
+
+# Create config directory
+mkdir -p ~/.config/zora

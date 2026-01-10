@@ -1,0 +1,33 @@
+[Package]
+name = "airride"
+version = "1.0.0"
+description = "Lightweight init system for Galactica Linux"
+url = "https://github.com/LinkNavi/Galactica/archive/refs/heads/main.tar.gz"
+category = "core"
+
+[Dependencies]
+depends = ""
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+# Build AirRide Init
+cd AirRide/Init
+mkdir -p build
+g++ -o build/airride src/main.cpp -Wall -Wextra -O2 -std=c++17 -fstack-protector-strong
+
+# Build AirRideCtl
+cd ../Ctl
+mkdir -p build
+g++ -o build/airridectl src/main.cpp -Wall -Wextra -O2 -std=c++17
+
+# Install
+install -Dm755 ../Init/build/airride /usr/sbin/airride
+ln -sf airride /usr/sbin/init
+install -Dm755 build/airridectl /usr/bin/airridectl
+
+# Create service directory
+mkdir -p /etc/airride/services
