@@ -2,3 +2,5 @@ core/airride.pkg
 core/dreamland.pkg
 core/poyo.pkg
 dev/zora.pkg
+modules/workspace.pkg
+modules/opsec.pkg
