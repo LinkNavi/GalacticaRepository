@@ -14,6 +14,7 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <ctime>
 #include <cstring>
 #include <string>
 #include <vector>
@@ -484,6 +485,7 @@ extern "C" DreamlandModuleInfo* dreamland_module_info() {
 }
 
 extern "C" int dreamland_module_init() {
+    srand(static_cast<unsigned>(time(nullptr)));
     return 0;
 }
 

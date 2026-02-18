@@ -14,7 +14,7 @@ make_flags = ""
 install_target = ""
 
 [Script]
-cd Poyo
+cd Galactica-main/Poyo
 
 # Build with PAM support (if available)
 if pkg-config --exists pam 2>/dev/null; then

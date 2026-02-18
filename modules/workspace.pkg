@@ -3,7 +3,7 @@
 name = "module-workspace"
 version = "1.0.0"
 description = "Dreamland WorkSpace Module"
-url = "https://raw.githubusercontent.com/LinkNavi/GalacticaRepository/main/modules/sources/opsec.cpp"
+url = "https://raw.githubusercontent.com/LinkNavi/GalacticaRepository/main/modules/sources/workspace.cpp"
 category = "modules"
 
 [Dependencies]
