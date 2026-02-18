@@ -1,0 +1,155 @@
+[Package]
+name = setup-xorg
+version = 1.0.0
+description = Xorg base setup for Galactica Linux
+url = 
+category = system
+
+[Dependencies]
+depends = xorg-server xorg-xinit xf86-input-libinput xf86-video-vesa mesa xorg-xrandr xorg-xauth
+
+[Script]
+# Nothing to build — this is a meta package
+
+[PostInstall]
+#!/bin/sh
+set -e
+
+echo "Configuring Xorg for Galactica..."
+
+# ── Groups ────────────────────────────────────────────────
+# Add every non-root user to the groups Xorg needs
+for user in $(awk -F: '$3 >= 1000 && $3 < 65534 {print $1}' /etc/passwd); do
+    echo "  Adding $user to video, input, tty, audio..."
+    usermod -aG video,input,tty,audio "$user" 2>/dev/null || true
+done
+
+# ── xorg.conf.d ───────────────────────────────────────────
+mkdir -p /etc/X11/xorg.conf.d
+
+# Input — libinput handles both keyboard and pointer
+cat > /etc/X11/xorg.conf.d/40-input.conf << 'EOF'
+Section "InputClass"
+    Identifier "libinput keyboard"
+    MatchIsKeyboard "on"
+    Driver "libinput"
+    Option "XkbLayout" "us"
+EndSection
+
+Section "InputClass"
+    Identifier "libinput pointer"
+    MatchIsPointer "on"
+    Driver "libinput"
+    Option "NaturalScrolling" "false"
+EndSection
+
+Section "InputClass"
+    Identifier "libinput touchpad"
+    MatchIsTouchpad "on"
+    Driver "libinput"
+    Option "Tapping" "on"
+    Option "NaturalScrolling" "true"
+EndSection
+EOF
+
+# ── GPU detection ─────────────────────────────────────────
+GPU_DRIVER="modesetting"  # safe default for most modern hardware
+
+if command -v lspci >/dev/null 2>&1; then
+    PCI_INFO=$(lspci 2>/dev/null)
+    if echo "$PCI_INFO" | grep -qi "nvidia"; then
+        GPU_DRIVER="nouveau"
+        GPU_NAME="NVIDIA (nouveau)"
+    elif echo "$PCI_INFO" | grep -qi "amd\|radeon\|advanced micro"; then
+        GPU_DRIVER="amdgpu"
+        GPU_NAME="AMD"
+    elif echo "$PCI_INFO" | grep -qi "intel"; then
+        GPU_DRIVER="modesetting"
+        GPU_NAME="Intel"
+    elif echo "$PCI_INFO" | grep -qi "vmware\|vmwgfx"; then
+        GPU_DRIVER="vmware"
+        GPU_NAME="VMware"
+    elif echo "$PCI_INFO" | grep -qi "virtio\|red hat"; then
+        GPU_DRIVER="modesetting"
+        GPU_NAME="VirtIO (QEMU)"
+    else
+        GPU_DRIVER="vesa"
+        GPU_NAME="Unknown (vesa fallback)"
+    fi
+else
+    # No lspci — try /sys
+    if ls /sys/class/drm/ 2>/dev/null | grep -q "card"; then
+        DRM_DRIVER=$(cat /sys/class/drm/card0/device/driver/module/srcversion 2>/dev/null || echo "")
+        case $(readlink /sys/class/drm/card0/device/driver 2>/dev/null) in
+            *i915*)   GPU_DRIVER="modesetting"; GPU_NAME="Intel (i915)"   ;;
+            *amdgpu*) GPU_DRIVER="amdgpu";     GPU_NAME="AMD (amdgpu)"   ;;
+            *nouveau*) GPU_DRIVER="nouveau";   GPU_NAME="NVIDIA (nouveau)";;
+            *virtio*) GPU_DRIVER="modesetting"; GPU_NAME="VirtIO"         ;;
+            *)        GPU_DRIVER="modesetting"; GPU_NAME="Unknown"        ;;
+        esac
+    fi
+fi
+
+echo "  Detected GPU: ${GPU_NAME:-Unknown}, using driver: $GPU_DRIVER"
+
+cat > /etc/X11/xorg.conf.d/20-gpu.conf << EOF
+Section "Device"
+    Identifier  "GPU"
+    Driver      "$GPU_DRIVER"
+EndSection
+EOF
+
+# ── ServerFlags — sensible defaults ──────────────────────
+cat > /etc/X11/xorg.conf.d/10-serverflags.conf << 'EOF'
+Section "ServerFlags"
+    Option "DontZap"        "false"
+    Option "BlankTime"      "10"
+    Option "StandbyTime"    "20"
+    Option "SuspendTime"    "30"
+    Option "OffTime"        "60"
+EndSection
+EOF
+
+# ── /etc/X11/Xwrapper.config ─────────────────────────────
+# Allows non-root users to start X
+cat > /etc/X11/Xwrapper.config << 'EOF'
+allowed_users = anybody
+needs_root_rights = auto
+EOF
+
+# ── startgui script ───────────────────────────────────────
+# Write a clean startgui that sources xinitrc properly
+cat > /usr/bin/startgui << 'EOF'
+#!/bin/sh
+# Galactica startgui — start an X session
+# Usage: startgui [wm]  (default: i3)
+
+WM="${1:-i3}"
+
+# Set up XDG dirs
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+mkdir -p "$XDG_RUNTIME_DIR"
+chmod 0700 "$XDG_RUNTIME_DIR"
+
+# Write a temporary xinitrc
+XINITRC=$(mktemp /tmp/xinitrc.XXXXXX)
+cat > "$XINITRC" << XIEOF
+# Load X resources if present
+[ -f "\$HOME/.Xresources" ] && xrdb -merge "\$HOME/.Xresources"
+
+# Load user xinitrc extras if present
+[ -f "\$HOME/.xinitrc.d" ] && for f in "\$HOME/.xinitrc.d"/*.sh; do . "\$f"; done
+
+exec $WM
+XIEOF
+
+exec startx "$XINITRC" -- :0 vt1
+EOF
+chmod 755 /usr/bin/startgui
+
+echo ""
+echo "  Xorg configured successfully."
+echo "  GPU driver:  $GPU_DRIVER"
+echo "  Start X with: startgui"
+echo "  Or with a specific WM: startgui openbox"
+echo ""
