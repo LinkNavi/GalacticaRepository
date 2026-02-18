@@ -14,7 +14,7 @@ make_flags = ""
 install_target = ""
 
 [Script]
-cd Dreamland
+cd Galactica-main/Dreamland
 
 # Check for required libraries
 if ! pkg-config --exists libcurl libarchive 2>/dev/null; then
@@ -28,22 +28,11 @@ g++ -o build/dreamland src/main.cpp \
     -std=c++17 -O2 -Wall -Wextra -fPIC \
     -lcurl -lssl -lcrypto -lz -lzstd -larchive -lpthread -ldl
 
-# Build workspace module
-if [ -f modules/workspace/src/workspace.cpp ]; then
-    g++ -std=c++17 -O2 -Wall -Wextra -fPIC -shared \
-        -I include \
-        -o build/workspace.so \
-        modules/workspace/src/workspace.cpp
-fi
 
 # Install
 install -Dm755 build/dreamland /usr/bin/dreamland
 ln -sf dreamland /usr/bin/dl
 
-# Install modules
+# Modules are installed separately via their own .pkg files
 mkdir -p /usr/local/share/dreamland/modules
-for module in build/*.so; do
-    if [ -f "$module" ]; then
-        install -Dm755 "$module" /usr/local/share/dreamland/modules/
-    fi
 done

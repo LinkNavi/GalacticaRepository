@@ -4,3 +4,4 @@ core/poyo.pkg
 dev/zora.pkg
 modules/workspace.pkg
 modules/opsec.pkg
+desktop/starview.pkg

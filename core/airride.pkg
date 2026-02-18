@@ -15,7 +15,7 @@ install_target = ""
 
 [Script]
 # Build AirRide Init
-cd AirRide/Init
+cd Galactica-main/AirRide/Init
 mkdir -p build
 g++ -o build/airride src/main.cpp -Wall -Wextra -O2 -std=c++17 -fstack-protector-strong
 
