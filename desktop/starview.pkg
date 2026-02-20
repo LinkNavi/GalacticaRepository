@@ -14,29 +14,14 @@ make_flags = ""
 install_target = ""
 
 [Script]
-cd StarView-main
-
 meson setup build \
     --prefix=/usr \
     --buildtype=release
-
 ninja -C build -j$(nproc)
-
 install -Dm755 build/compositor /usr/bin/starview
-
-# Install default config if present
-if [ -d config ]; then
-    mkdir -p /etc/starview
-    cp -r config/* /etc/starview/
-fi
-
-# Install example user config
-mkdir -p /usr/share/starview
-if [ -f config/default.toml ]; then
-    install -Dm644 config/default.toml /usr/share/starview/default.toml
-fi
-
-# Desktop entry
+mkdir -p /etc/starview /usr/share/starview /usr/share/wayland-sessions
+[ -d config ] && cp -r config/* /etc/starview/
+[ -f config/default.toml ] && install -Dm644 config/default.toml /usr/share/starview/default.toml
 cat > /usr/share/wayland-sessions/starview.desktop << 'EOF'
 [Desktop Entry]
 Name=StarView
