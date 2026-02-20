@@ -1,0 +1,19 @@
+[Package]
+name = "cmake"
+version = "3.31.0"
+description = "Cross-platform build system generator"
+url = "https://github.com/Kitware/CMake/releases/download/v3.31.0/cmake-3.31.0.tar.gz"
+category = "development"
+
+[Dependencies]
+depends = "gcc make openssl"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+./bootstrap --prefix=/usr --parallel=$(nproc)
+make -j$(nproc)
+make install

@@ -1,0 +1,16 @@
+[Package]
+name = "xterm"
+version = "394"
+description = "Terminal emulator for the X Window System"
+url = "https://invisible-island.net/datafiles/release/xterm.tar.gz"
+category = "desktop"
+
+[Dependencies]
+depends = "xorg-server libxft libxaw"
+
+[Build]
+configure_flags = "--prefix=/usr --enable-256-color --enable-wide-chars"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]

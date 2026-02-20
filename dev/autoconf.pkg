@@ -1,0 +1,16 @@
+[Package]
+name = "autoconf"
+version = "2.72"
+description = "GNU tool for producing configure scripts"
+url = "https://ftp.gnu.org/gnu/autoconf/autoconf-2.72.tar.xz"
+category = "development"
+
+[Dependencies]
+depends = "make m4"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]

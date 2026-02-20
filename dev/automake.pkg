@@ -1,0 +1,16 @@
+[Package]
+name = "automake"
+version = "1.17"
+description = "GNU tool for generating Makefile.in files"
+url = "https://ftp.gnu.org/gnu/automake/automake-1.17.tar.xz"
+category = "development"
+
+[Dependencies]
+depends = "autoconf make"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]

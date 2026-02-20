@@ -1,0 +1,16 @@
+[Package]
+name = "xf86-input-evdev"
+version = "2.10.6"
+description = "X.Org evdev input driver"
+url = "https://xorg.freedesktop.org/releases/individual/driver/xf86-input-evdev-2.10.6.tar.xz"
+category = "desktop"
+
+[Dependencies]
+depends = "xorg-server"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]

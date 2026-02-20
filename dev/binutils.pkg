@@ -1,0 +1,27 @@
+[Package]
+name = "binutils"
+version = "2.43"
+description = "GNU binary utilities - ld, as, ar, nm, objdump, strip"
+url = "https://ftp.gnu.org/gnu/binutils/binutils-2.43.tar.xz"
+category = "development"
+
+[Dependencies]
+depends = "glibc"
+
+[Build]
+configure_flags = "--prefix=/usr --enable-gold --enable-ld=default --enable-plugins --enable-shared --disable-werror --with-system-zlib"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+mkdir -p build && cd build
+../configure \
+    --prefix=/usr \
+    --enable-gold \
+    --enable-ld=default \
+    --enable-plugins \
+    --enable-shared \
+    --disable-werror \
+    --with-system-zlib
+make -j$(nproc)
+make install

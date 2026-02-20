@@ -1,0 +1,17 @@
+[Package]
+name = "meson"
+version = "1.6.0"
+description = "Fast and user friendly build system"
+url = "https://github.com/mesonbuild/meson/releases/download/1.6.0/meson-1.6.0.tar.gz"
+category = "development"
+
+[Dependencies]
+depends = "python ninja"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+python setup.py install --prefix=/usr

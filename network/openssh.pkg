@@ -1,0 +1,18 @@
+[Package]
+name = "openssh"
+version = "9.9p1"
+description = "OpenSSH remote login client and server"
+url = "https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-9.9p1.tar.gz"
+category = "network"
+
+[Dependencies]
+depends = "openssl zlib"
+
+[Build]
+configure_flags = "--prefix=/usr --sysconfdir=/etc/ssh --with-ssl-dir=/usr --with-zlib --with-privsep-path=/var/empty"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+mkdir -p /var/empty
+chmod 755 /var/empty

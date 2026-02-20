@@ -1,0 +1,35 @@
+[Package]
+name = "xorg-server"
+version = "21.1.14"
+description = "X.Org X server"
+url = "https://xorg.freedesktop.org/releases/individual/xserver/xorg-server-21.1.14.tar.xz"
+category = "desktop"
+
+[Dependencies]
+depends = "libdrm mesa pixman libxkbcommon xkeyboard-config libxau libxdmcp libxfont2 libepoxy libtirpc"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+mkdir -p build && cd build
+meson setup .. \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dxorg=true \
+    -Dxephyr=false \
+    -Dxwayland=false \
+    -Dxvfb=true \
+    -Dsecure-rpc=false \
+    -Dipv6=true
+ninja -j$(nproc)
+ninja install
+
+# Fix permissions for Xorg wrapper
+chmod u+s /usr/lib/xorg/Xorg.wrap 2>/dev/null || true
+
+# Create X11 socket directory
+mkdir -p /tmp/.X11-unix
+chmod 1777 /tmp/.X11-unix

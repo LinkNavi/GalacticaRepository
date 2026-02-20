@@ -1,0 +1,17 @@
+[Package]
+name = "makeuser"
+version = "1.0.0"
+description = "Galactica user creation helper script"
+url = "https://github.com/LinkNavi/Galactica/archive/refs/heads/main.tar.gz"
+category = "system"
+
+[Dependencies]
+depends = "shadow openssl"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+install -Dm755 Galactica-main/galactica-build/usr/bin/makeuser /usr/bin/makeuser

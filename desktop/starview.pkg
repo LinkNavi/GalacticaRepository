@@ -6,7 +6,7 @@ url = "https://github.com/LinkNavi/StarView/archive/refs/tags/v1.0.0.tar.gz"
 category = "desktop"
 
 [Dependencies]
-depends = "wlroots wayland wayland-protocols libxkbcommon json-c cairo pango libdrm xwayland libxcb xcb-util-wm meson ninja"
+depends = "wlroots0.18 wayland wayland-protocols libxkbcommon json-c cairo pango libdrm xwayland libxcb xcb-util-wm meson ninja"
 
 [Build]
 configure_flags = ""

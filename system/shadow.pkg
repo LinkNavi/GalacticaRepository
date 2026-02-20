@@ -1,0 +1,20 @@
+[Package]
+name = "shadow"
+version = "4.16.0"
+description = "Password and account management tools - useradd, passwd, etc"
+url = "https://github.com/shadow-maint/shadow/releases/download/4.16.0/shadow-4.16.0.tar.xz"
+category = "system"
+
+[Dependencies]
+depends = "glibc libcrypt"
+
+[Build]
+configure_flags = "--prefix=/usr --sysconfdir=/etc --disable-man --without-selinux"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+# Set SUID bits
+chmod u+s /usr/bin/passwd
+chmod u+s /usr/bin/su
+chmod u+s /usr/bin/newgrp

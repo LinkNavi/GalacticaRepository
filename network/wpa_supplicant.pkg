@@ -1,0 +1,45 @@
+[Package]
+name = "wpa_supplicant"
+version = "2.11"
+description = "WPA/WPA2/IEEE 802.1X supplicant for WiFi"
+url = "https://w1.fi/releases/wpa_supplicant-2.11.tar.gz"
+category = "network"
+
+[Dependencies]
+depends = "openssl libnl"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+cd wpa_supplicant
+
+cat > .config << 'WPACONF'
+CONFIG_DRIVER_NL80211=y
+CONFIG_LIBNL32=y
+CONFIG_IEEE8021X_EAPOL=y
+CONFIG_EAP_MD5=y
+CONFIG_EAP_MSCHAPV2=y
+CONFIG_EAP_TLS=y
+CONFIG_EAP_PEAP=y
+CONFIG_EAP_TTLS=y
+CONFIG_EAP_GTC=y
+CONFIG_EAP_OTP=y
+CONFIG_PKCS12=y
+CONFIG_TLS=openssl
+CONFIG_WPS=y
+CONFIG_WPA_CLI_EDIT=y
+WPACONF
+
+make -j$(nproc)
+install -Dm755 wpa_supplicant /usr/sbin/wpa_supplicant
+install -Dm755 wpa_cli        /usr/sbin/wpa_cli
+install -Dm755 wpa_passphrase /usr/sbin/wpa_passphrase
+
+mkdir -p /etc/wpa_supplicant
+cat > /etc/wpa_supplicant/wpa_supplicant.conf << 'WPADEFAULT'
+ctrl_interface=/var/run/wpa_supplicant
+update_config=1
+WPADEFAULT

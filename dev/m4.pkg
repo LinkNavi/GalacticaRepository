@@ -1,0 +1,16 @@
+[Package]
+name = "m4"
+version = "1.4.19"
+description = "GNU M4 macro processor"
+url = "https://ftp.gnu.org/gnu/m4/m4-1.4.19.tar.xz"
+category = "development"
+
+[Dependencies]
+depends = "glibc"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]

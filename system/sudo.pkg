@@ -1,0 +1,18 @@
+[Package]
+name = "sudo"
+version = "1.9.16p2"
+description = "Give certain users the ability to run commands as root"
+url = "https://www.sudo.ws/dist/sudo-1.9.16p2.tar.gz"
+category = "system"
+
+[Dependencies]
+depends = "glibc"
+
+[Build]
+configure_flags = "--prefix=/usr --with-secure-path --with-all-insults --with-env-editor --docdir=/usr/share/doc/sudo"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+# Set SUID bit
+chmod u+s /usr/bin/sudo

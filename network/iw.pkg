@@ -1,0 +1,18 @@
+[Package]
+name = "iw"
+version = "6.9"
+description = "CLI configuration utility for wireless devices"
+url = "https://www.kernel.org/pub/software/network/iw/iw-6.9.tar.xz"
+category = "network"
+
+[Dependencies]
+depends = "libnl"
+
+[Build]
+configure_flags = ""
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+make -j$(nproc) PREFIX=/usr
+make install PREFIX=/usr

@@ -1,0 +1,16 @@
+[Package]
+name = "libtool"
+version = "2.4.7"
+description = "Generic library support script"
+url = "https://ftp.gnu.org/gnu/libtool/libtool-2.4.7.tar.xz"
+category = "development"
+
+[Dependencies]
+depends = "autoconf automake make"
+
+[Build]
+configure_flags = "--prefix=/usr"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]

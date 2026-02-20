@@ -1,0 +1,38 @@
+[Package]
+name = "xorg-xinit"
+version = "1.4.2"
+description = "X.Org initialisation program - startx"
+url = "https://xorg.freedesktop.org/releases/individual/app/xinit-1.4.2.tar.xz"
+category = "desktop"
+
+[Dependencies]
+depends = "xorg-server"
+
+[Build]
+configure_flags = "--prefix=/usr --with-xinitdir=/etc/X11/xinit"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]
+# After install, create startgui helper
+cat > /usr/bin/startgui << 'STARTGUI'
+#!/bin/sh
+mkdir -p /tmp/.X11-unix
+chmod 1777 /tmp/.X11-unix
+export HOME="${HOME:-/root}"
+export XAUTHORITY="$HOME/.Xauthority"
+touch "$XAUTHORITY"
+cd "$HOME"
+exec startx "$HOME/.xinitrc" -- -keeptty -nolisten tcp 2>&1
+STARTGUI
+chmod +x /usr/bin/startgui
+
+# Default .xinitrc if user doesn't have one
+if [ ! -f /root/.xinitrc ]; then
+    cat > /root/.xinitrc << 'XINITRC'
+#!/bin/sh
+xsetroot -solid "#1e1e2e" 2>/dev/null &
+exec xterm -bg black -fg white -geometry 100x30
+XINITRC
+    chmod +x /root/.xinitrc
+fi

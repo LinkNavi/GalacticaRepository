@@ -1,0 +1,16 @@
+[Package]
+name = "wget"
+version = "1.25.0"
+description = "Non-interactive network downloader"
+url = "https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz"
+category = "network"
+
+[Dependencies]
+depends = "openssl zlib"
+
+[Build]
+configure_flags = "--prefix=/usr --with-ssl=openssl"
+make_flags = "-j$(nproc)"
+install_target = "install"
+
+[Script]

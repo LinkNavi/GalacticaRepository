@@ -1,0 +1,17 @@
+[Package]
+name = "setup-xorg"
+version = "1.0.0"
+description = "Galactica X11 setup helper script"
+url = "https://github.com/LinkNavi/Galactica/archive/refs/heads/main.tar.gz"
+category = "system"
+
+[Dependencies]
+depends = "xorg-server xorg-xinit xf86-input-evdev"
+
+[Build]
+configure_flags = ""
+make_flags = ""
+install_target = ""
+
+[Script]
+install -Dm755 Galactica-main/galactica-build/sbin/setup-xorg /sbin/setup-xorg
