@@ -2,7 +2,7 @@
 name = "starview"
 version = "1.0.0"
 description = "StarView Wayland compositor and window manager"
-url = "https://github.com/LinkNavi/StarView/archive/refs/heads/main.tar.gz"
+url = "https://github.com/LinkNavi/StarView/archive/refs/tags/v1.0.0.tar.gz"
 category = "desktop"
 
 [Dependencies]
