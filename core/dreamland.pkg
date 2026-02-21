@@ -1,38 +1,10 @@
 [Package]
 name = "dreamland"
-version = "2.0.0"
-description = "Source-based package manager for Galactica Linux"
-url = "https://github.com/LinkNavi/Galactica/archive/refs/heads/main.tar.gz"
+version = "1.0.0"
+description = "Dreamland package manager"
+url = "https://github.com/LinkNavi/Galactica/releases/download/dreamland-1.0.0/dreamland-1.0.0.tar.gz"
 category = "core"
 
-[Dependencies]
-depends = "libcurl openssl zlib zstd libarchive"
-
-[Build]
-configure_flags = ""
-make_flags = ""
-install_target = ""
-
 [Script]
-cd Galactica-main/Dreamland
-
-# Check for required libraries
-if ! pkg-config --exists libcurl libarchive 2>/dev/null; then
-    echo "Warning: Some libraries missing, trying anyway..."
-fi
-
-mkdir -p build
-
-# Build main binary
-g++ -o build/dreamland src/main.cpp \
-    -std=c++17 -O2 -Wall -Wextra -fPIC \
-    -lcurl -lssl -lcrypto -lz -lzstd -larchive -lpthread -ldl
-
-
-# Install
-install -Dm755 build/dreamland /usr/bin/dreamland
+install -Dm755 dreamland /usr/bin/dreamland
 ln -sf dreamland /usr/bin/dl
-
-# Modules are installed separately via their own .pkg files
-mkdir -p /usr/local/share/dreamland/modules
-done
