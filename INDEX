@@ -1,4 +1,5 @@
 core/base.pkg
+core/linux.pkg
 core/busybox.pkg
 core/airride.pkg
 core/poyo.pkg

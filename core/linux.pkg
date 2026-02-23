@@ -1,0 +1,20 @@
+[Package]
+name = "linux"
+version = "6.18.4"
+description = "Galactica Linux kernel"
+url = "https://github.com/LinkNavi/Galactica/releases/download/galactica-kernel-6.18.4/galactica-kernel-6.18.4.tar.gz"
+category = "core"
+type = "kernel"
+
+[Dependencies]
+depends = "busybox"
+
+[Script]
+mkdir -p /boot
+cp boot/vmlinuz-galactica /boot/vmlinuz-galactica
+chmod 755 /boot/vmlinuz-galactica
+cp boot/.kernel-version /boot/.kernel-version 2>/dev/null || echo "6.18.4" > /boot/.kernel-version
+KVER=$(cat /boot/.kernel-version 2>/dev/null || echo "6.18.4")
+mkdir -p /lib/modules
+cp -a lib/modules/. /lib/modules/
+depmod "$KVER" 2>/dev/null || depmod -a 2>/dev/null || true

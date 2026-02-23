@@ -6,5 +6,7 @@ url = "https://github.com/LinkNavi/Galactica/releases/download/dreamland-1.0.0/d
 category = "core"
 
 [Script]
-install -Dm755 dreamland /usr/bin/dreamland
+mkdir -p /usr/bin
+cp dreamland /usr/bin/dreamland
+chmod 755 /usr/bin/dreamland
 ln -sf dreamland /usr/bin/dl

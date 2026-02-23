@@ -2,26 +2,17 @@
 name = "starview"
 version = "1.0.0"
 description = "StarView Wayland compositor and window manager"
-url = "https://github.com/LinkNavi/StarView/archive/refs/tags/v1.0.0.tar.gz"
+url = "https://github.com/LinkNavi/StarView/releases/download/v1.0.0/starview-1.0.0.tar.gz"
 category = "desktop"
 
 [Dependencies]
-depends = "wlroots0.18 wayland wayland-protocols libxkbcommon json-c cairo pango libdrm xwayland libxcb xcb-util-wm meson ninja"
-
-[Build]
-configure_flags = ""
-make_flags = ""
-install_target = ""
+depends = "wlroots0.18 wayland wayland-protocols libxkbcommon json-c cairo pango libdrm xorg-xwayland libxcb xcb-util-icccm"
 
 [Script]
-meson setup build \
-    --prefix=/usr \
-    --buildtype=release
-ninja -C build -j$(nproc)
-install -Dm755 build/compositor /usr/bin/starview
-mkdir -p /etc/starview /usr/share/starview /usr/share/wayland-sessions
-[ -d config ] && cp -r config/* /etc/starview/
-[ -f config/default.toml ] && install -Dm644 config/default.toml /usr/share/starview/default.toml
+mkdir -p /usr/bin /etc/starview /usr/share/starview /usr/share/wayland-sessions
+cp starview /usr/bin/starview
+chmod 755 /usr/bin/starview
+[ -d config ] && cp -r config/. /etc/starview/ || true
 cat > /usr/share/wayland-sessions/starview.desktop << 'EOF'
 [Desktop Entry]
 Name=StarView

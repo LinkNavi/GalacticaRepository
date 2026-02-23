@@ -6,6 +6,8 @@ url = "https://github.com/LinkNavi/Galactica/releases/download/airride-1.0.0/air
 category = "core"
 
 [Script]
-install -Dm755 airride /sbin/airride
-install -Dm755 airridectl /usr/bin/airridectl
+mkdir -p /sbin /usr/bin
+cp airride /sbin/airride
+cp airridectl /usr/bin/airridectl
+chmod 755 /sbin/airride /usr/bin/airridectl
 ln -sf airride /sbin/init
