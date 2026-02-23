@@ -10,19 +10,11 @@ type = "kernel"
 depends = "busybox"
 
 [Script]
-# The tarball from build-kernel.yml extracts to:
-#   boot/vmlinuz-galactica
-#   boot/.kernel-version
-#   lib/modules/<version>/...
-
-# Install kernel image
-install -Dm755 boot/vmlinuz-galactica /boot/vmlinuz-galactica
+mkdir -p /boot
+cp boot/vmlinuz-galactica /boot/vmlinuz-galactica
+chmod 755 /boot/vmlinuz-galactica
 cp boot/.kernel-version /boot/.kernel-version 2>/dev/null || echo "6.18.4" > /boot/.kernel-version
-
-# Install modules
 KVER=$(cat /boot/.kernel-version 2>/dev/null || echo "6.18.4")
 mkdir -p /lib/modules
 cp -a lib/modules/. /lib/modules/
-
-# Regenerate module dependency map
 depmod "$KVER" 2>/dev/null || depmod -a 2>/dev/null || true

@@ -6,4 +6,6 @@ url = "https://github.com/LinkNavi/Galactica/releases/download/poyo-1.1.0/poyo-1
 category = "core"
 
 [Script]
-install -Dm755 poyo /sbin/poyo
+mkdir -p /sbin
+cp poyo /sbin/poyo
+chmod 755 /sbin/poyo
